@@ -521,6 +521,17 @@ public class ConfigHandler {
 		PetColours.PET_80_TO_89 = initInt("colors", "pet80To89", 0x5C1F35); // idk weird magenta
 		PetColours.PET_90_TO_99 = initInt("colors", "pet90To99", 0x9E794E); // Brown
 		PetColours.PET_100 = initInt("colors", "pet100", 0xF2D249); // Gold
+		
+		//Macro
+        	if (!hasKey("macro", "delay")) writeIntConfig("macro", "delay", 0);
+        	if (!hasKey("macro", "delay")) writeIntConfig("macro", "terminal", 150);
+        	if (!hasKey("macro", "swap")) writeIntConfig("macro", "swap", 150);
+        	if (!hasKey("macro", "simon")) writeIntConfig("macro", "simon", 50);
+		DelayCommand.boneDelay = getInt("macro", "delay");
+        	SwapCommand.swapDelay = getInt("macro", "swap");
+        	SleepCommand.waitAmount = getInt("macro", "terminal");
+        	SimonCommand.simonAmount = getInt("macro", "simon");
+		
 		UltrasequencerSolver.ULTRASEQUENCER_NEXT = initInt("colors", "ultrasequencerNext", 0x40FF40);
 		UltrasequencerSolver.ULTRASEQUENCER_NEXT_TO_NEXT = initInt("colors", "ultrasequencerNextToNext", 0x40DAE6);
 		ChronomatronSolver.CHRONOMATRON_NEXT = initInt("colors", "chronomatronNext", 0x40FF40);
