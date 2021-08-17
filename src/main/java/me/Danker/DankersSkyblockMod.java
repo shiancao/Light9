@@ -174,6 +174,11 @@ public class DankersSkyblockMod {
         ClientCommandHandler.instance.registerCommand(new SkyblockPlayersCommand());
         ClientCommandHandler.instance.registerCommand(new SlayerCommand());
         ClientCommandHandler.instance.registerCommand(new ToggleCommand());
+	ClientCommandHandler.instance.registerCommand(new SimonCommand());
+        ClientCommandHandler.instance.registerCommand(new DelayCommand());
+        ClientCommandHandler.instance.registerCommand(new SleepCommand());
+        ClientCommandHandler.instance.registerCommand(new SwapCommand());
+	ClientCommandHandler.instance.registerCommand(new ToggleNoRotateCommand());
 
         configDirectory = event.getModConfigurationDirectory().toString();
     }
