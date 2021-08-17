@@ -8,11 +8,9 @@
  - Bonemerang Macro
  - Hyperion Autoclicker
  - Ghost Block creator
- - And more!
  - Right click spammer
  - NoRotate (prevents AOTE/Hyperion from changing head rotation)
 
- **Note: This mod is BANNABLE on Hypixel Skyblock**
 **Controls/Hotkeys can be set in controls menu**
 
 **Delays and values for the different features can be set with the following commands:**
@@ -140,3 +138,4 @@ Software | License
 [SkyblockAddons](https://github.com/BiscuitDevelopment/SkyblockAddons/) | [MIT License](https://github.com/BiscuitDevelopment/SkyblockAddons/blob/master/LICENSE)
 [Zealot Counter](https://github.com/symt/zealot-counter/) | [Apache License](https://github.com/symt/zealot-counter/blob/master/LICENSE.md)
 [NotEnoughUpdates](https://github.com/Moulberry/NotEnoughUpdates/) | [Creative Commons Public License](https://github.com/Moulberry/NotEnoughUpdates/blob/master/LICENSE)
+[ForgeHax](https://github.com/fr1kin/ForgeHax) | [MIT License](https://github.com/fr1kin/ForgeHax/blob/1.16/LICENSE)
