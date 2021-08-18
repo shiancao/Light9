@@ -1,22 +1,24 @@
-![](https://cdn.discordapp.com/attachments/868904495910907957/877544497230262322/logo.png)
-# 
-**(Based on Danker's Skyblock Mod v1.8.6)**
+<p align="center">
+<img src="https://cdn.discordapp.com/attachments/868904495910907957/877657554078040084/icon.png">
+</p>
 
-### Note: This mod is BANNABLE on Hypixel Skyblock
+<p align="center">
+(Based on Danker's Skyblock Mod v1.8.6)
+</p>
+<br><br>
 
-**Features:**
- - Automatic Terminal Solver (NEED ACCOUNT FOR TESTING)
- - Hyperion Autoclicker
- - Ghost Block creator
+### DISCLAIMER: This mod is BANNABLE on Hypixel Skyblock!
 
-**Controls/Hotkeys can be set in controls menu**
+## Features:
+ **- Hyperion Autoclicker**
+ 
+ **- Ghost Block creator**
+ 
+**Controls/Hotkeys can be set in controls menu.**
 
-**Delays and values for the different features can be set with the following commands:**
-- /sleepamount [time between terminal solver clicks in ms]
-
-To turn on terminal solvers, do "/dsm", click "Toggle Dungeon Puzzle Solvers", and turn on any of the buttons with the word "Terminal" on it.
-
-# INSTALLATION GUIDE
+<details>
+ <summary>Installation Guide</summary>
+ 
 ### 1. Download the files as a ZIP.
 
 ![Download As Zip](https://cdn.discordapp.com/attachments/868904495910907957/877538142910042162/unknown.png)]
@@ -24,12 +26,11 @@ To turn on terminal solvers, do "/dsm", click "Toggle Dungeon Puzzle Solvers", a
 ### 2. Simply unzip the file using 7zip or winrar.
 ### 3. Open Command Prompt inside the folder that you just unzipped, then write the following: `gradlew build` and hit enter. Wait some time, and it should end up looking like this:
 ![gradlew](https://cdn.discordapp.com/attachments/868904495910907957/877541390433804368/unknown.png)
-### 4. Now go into the `build\libs` directory. Now copy the `Danker's Skyblock Mod-1.8.6.jar` file into your mod folder.
+### 4. Now go into the `build\libs` directory. Copy the `Danker's Skyblock Mod-1.8.6.jar` file into your mod folder, be sure to remove the real mod, or else your game will crash!
+</details>
 
 ### Below is the default Danker's Skyblock Mod README:
-
-
-
+<br><br>
 QOL changes that enhances your Hypixel Skyblock experience. Created to add features I couldn't find in a mod, or if the mod was paid (which is against the [Mojang TOS](https://account.mojang.com/documents/commercial_guidelines)).
 
 Discord Server: https://discord.gg/QsEkNQS
