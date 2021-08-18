@@ -1,9 +1,7 @@
 package me.Danker.handlers;
 
 import me.Danker.DankersSkyblockMod;
-import me.Danker.commands.MoveCommand;
-import me.Danker.commands.ScaleCommand;
-import me.Danker.commands.ToggleCommand;
+import me.Danker.commands.*;
 import me.Danker.features.*;
 import me.Danker.features.loot.LootDisplay;
 import me.Danker.features.loot.LootTracker;
