@@ -30,10 +30,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.StringUtils;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.GuiIngameForge;
@@ -57,12 +54,12 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-import java.lang.reflect.Method;
-import me.Danker.events.GuiChestBackgroundDrawnEvent;
+import java.io.IOException;
+import java.util.List;
+import net.minecraft.util.EnumChatFormatting;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import java.io.IOException;
 import java.util.*;
 
 @Mod(modid = DankersSkyblockMod.MODID, version = DankersSkyblockMod.VERSION, clientSideOnly = true)
@@ -86,11 +83,7 @@ public class DankersSkyblockMod {
     static String[] harpInv = new String[54];
     public static int chestOpen = 0;
     public static long lastInteractTime;
-    static int[] terminalNumberNeeded = new int[13];
-    static int[] chest = new int[54];
     public int mazeId = 0;
-    public int sword = 10;
-    public int bow = 10;
     static int lastUltraSequencerClicked = 0;
     static Slot[] clickInOrderSlots = new Slot[36];
     public int chestSize;
@@ -98,6 +91,7 @@ public class DankersSkyblockMod {
     static List<String> chronomatronPattern = new ArrayList<>();
     static int chronomatronMouseClicks = 0;
     static ItemStack[] experimentTableSlots = new ItemStack[54];
+
 
     public static String MAIN_COLOUR;
     public static String SECONDARY_COLOUR;
@@ -205,7 +199,6 @@ public class DankersSkyblockMod {
         ClientCommandHandler.instance.registerCommand(new SkyblockPlayersCommand());
         ClientCommandHandler.instance.registerCommand(new SlayerCommand());
         ClientCommandHandler.instance.registerCommand(new ToggleCommand());
-        ClientCommandHandler.instance.registerCommand(new SleepCommand());
 
 
         configDirectory = event.getModConfigurationDirectory().toString();
@@ -278,6 +271,8 @@ public class DankersSkyblockMod {
             }).start();
         }
     }
+
+
 
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent event) {
@@ -415,55 +410,6 @@ public class DankersSkyblockMod {
                 player.dropOneItem(true);
             }
         }
-        /* if (keyBindings[3].isPressed()) {
-            int[] order = new int[9];
-            for (int i = 0; i <= 8; i++) {
-                ItemStack item = player.inventory.getStackInSlot(i);
-                if (item != null && item.getDisplayName().contains("Bonemerang"))
-                    order[i] = 1;
-                if ((item != null && item.getDisplayName().contains("Giant's Sword")) || (item != null && item.getDisplayName().contains("Emerald")))
-                    this.sword = i;
-                if (item != null && item.getDisplayName().contains("Bow"))
-                    this.bow = i;
-            }
-            new Thread(() -> {
-                for (int i = 0; i <= 8; i++) {
-                    if (order[i] != 0) {
-                        player.inventory.currentItem = i;
-                        mc.playerController.sendUseItem(mc.thePlayer, world, player.inventory.getStackInSlot(i));
-                        try {
-                            Thread.sleep(DelayCommand.boneDelay);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                if (this.sword != 10 && this.bow != 10 && SwapCommand.swapDelay != 0) {
-                    player.inventory.currentItem = this.sword;
-                    try {
-                        Thread.sleep(SwapCommand.swapDelay);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    player.inventory.currentItem = this.bow;
-                }
-            }).start();
-        }
-        if (keyBindings[4].isPressed()) {
-            mazeId = 0;
-            slotIn = -1;
-        }
-        if (keyBindings[5].isPressed()) {
-            for (int i = 0; i <= SimonCommand.simonAmount; i++) {
-                try {
-                    Method method = mc.getClass().getDeclaredMethod("func_147121_ag", new Class[0]);
-                    method.setAccessible(true);
-                    method.invoke(mc, new Object[0]);
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
-            }
-        }*/
     }
 
     @SubscribeEvent
@@ -530,170 +476,6 @@ public class DankersSkyblockMod {
                         until = tickAmount;
                         harpInv = currentInv;
                     }
-                }
-            }
-        }
-        if (displayName.equals("Navigate the maze!") && invSlots.size() == 90 && ToggleCommand.startsWithToggled && System.currentTimeMillis() - lastInteractTime >= SleepCommand.waitAmount) {
-            if (mazeId <= mc.thePlayer.openContainer.windowId) {
-                mazeId = mc.thePlayer.openContainer.windowId;
-            }
-            Container playerContainer = mc.thePlayer.openContainer;
-            IInventory chestInventory = ((ContainerChest) playerContainer).getLowerChestInventory();
-            if (slotIn == -1) {
-                System.out.println("checking chest");
-                for (int i = 0; i <= 53; i++) {
-                    ItemStack itemStack = chestInventory.getStackInSlot(i);
-                    if (itemStack != null) {
-                        int type = itemStack.getItemDamage();
-                        if (type == 0)
-                            chest[i] = 1;
-                        if (type == 5) {
-                            slotIn = i;
-                            chest[i] = 2;
-                        }
-                    }
-                }
-            }
-            int firstCheck = slotIn + 1;
-            int secondCheck = slotIn + 9;
-            int thirdCheck = slotIn - 1;
-            int fourthCheck = slotIn - 9;
-            System.out.println("attempt " + slotIn);
-            if (firstCheck % 9 != 0 && firstCheck <= 53 &&
-                    chest[firstCheck] == 1) {
-                chest[firstCheck] = 0;
-                slotIn = firstCheck;
-                System.out.println("1");
-                mc.playerController.windowClick(mazeId, firstCheck, 0, 0, mc.thePlayer);
-                mazeId++;
-                lastInteractTime = System.currentTimeMillis();
-            } else if (secondCheck <= 53 &&
-                    chest[secondCheck] == 1) {
-                chest[secondCheck] = 0;
-                slotIn = secondCheck;
-                System.out.println("2");
-                mc.playerController.windowClick(mazeId, secondCheck, 0, 0, mc.thePlayer);
-                mazeId++;
-                lastInteractTime = System.currentTimeMillis();
-            } else if (thirdCheck % 9 != 8 && thirdCheck >= 0 && thirdCheck <= 53 &&
-                    chest[thirdCheck] == 1) {
-                chest[thirdCheck] = 0;
-                slotIn = thirdCheck;
-                System.out.println("3");
-                mc.playerController.windowClick(mazeId, thirdCheck, 0, 0, mc.thePlayer);
-                mazeId++;
-                lastInteractTime = System.currentTimeMillis();
-            } else if (fourthCheck >= 0 && (Minecraft.getMinecraft()).currentScreen != null &&
-                    chest[fourthCheck] == 1) {
-                chest[fourthCheck] = 0;
-                slotIn = fourthCheck;
-                System.out.println("4");
-                mc.playerController.windowClick(mazeId, fourthCheck, 0, 0, mc.thePlayer);
-                mazeId++;
-                lastInteractTime = System.currentTimeMillis();
-            }
-            if (!Utils.inSkyblock) return;
-            if (event.gui instanceof GuiChest) {
-                if (containerChest instanceof ContainerChest) {
-                    int chestSize = inventory.inventorySlots.inventorySlots.size();
-
-                    MinecraftForge.EVENT_BUS.post(new GuiChestBackgroundDrawnEvent(inventory, displayName, chestSize, invSlots));
-                }
-            }
-        }
-        if (ToggleCommand.startsWithToggled && System.currentTimeMillis() - lastInteractTime >= SleepCommand.waitAmount && displayName.startsWith("What starts with:")) {
-            char letter = displayName.charAt(displayName.indexOf("'") + 1);
-            if (mazeId <= mc.thePlayer.openContainer.windowId)
-                mazeId = mc.thePlayer.openContainer.windowId;
-            for (Slot startsWith : invSlots) {
-                if (startsWith.slotNumber <= lastSlot ||
-                        startsWith.getSlotIndex() <= lastSlot)
-                    continue;
-                ItemStack item = startsWith.getStack();
-                if (item == null ||
-                        item.isItemEnchanted())
-                    continue;
-                if (StringUtils.stripControlCodes(item.getDisplayName()).charAt(0) == letter) {
-                    mc.playerController.windowClick(mazeId, startsWith.slotNumber, 0, 0, mc.thePlayer);
-                    mazeId++;
-                    lastSlot = startsWith.getSlotIndex();
-                    lastInteractTime = System.currentTimeMillis();
-                    break;
-                }
-                if (mazeId - 15 > mc.thePlayer.openContainer.windowId)
-                    break;
-            }
-        }
-        if (ToggleCommand.startsWithToggled && System.currentTimeMillis() - lastInteractTime >= SleepCommand.waitAmount && displayName.equals("Correct all the panes!")) {
-            for (Slot startsWith : invSlots) {
-                if (startsWith.getSlotIndex() > 53 ||
-                        startsWith.getSlotIndex() <= lastSlot)
-                    continue;
-                ItemStack item = startsWith.getStack();
-                if (item == null ||
-                        item.isItemEnchanted())
-                    continue;
-                if (item.getDisplayName().contains("Off") && (Minecraft.getMinecraft()).currentScreen != null) {
-                    if (mazeId <= mc.thePlayer.openContainer.windowId)
-                        mazeId = mc.thePlayer.openContainer.windowId;
-                    mc.playerController.windowClick(mazeId, startsWith.slotNumber, 0, 0, mc.thePlayer);
-                    mazeId++;
-                    lastSlot = startsWith.getSlotIndex();
-                    lastInteractTime = System.currentTimeMillis();
-                    break;
-                }
-                if (mazeId - 15 > mc.thePlayer.openContainer.windowId)
-                    break;
-            }
-        }
-        if (ToggleCommand.startsWithToggled && System.currentTimeMillis() - lastInteractTime >= SleepCommand.waitAmount && displayName.startsWith("Select all the")) {
-            for (Slot slot : invSlots) {
-                String colour = displayName.split(" ")[3];
-                if (slot.getSlotIndex() > 53 || slot.getSlotIndex() <= lastSlot) continue;
-                ItemStack item = slot.getStack();
-                if (item == null || item.isItemEnchanted()) continue;
-                String itemName = StringUtils.stripControlCodes(item.getDisplayName()).toUpperCase();
-                if (item.getDisplayName().toUpperCase().contains(colour) || (colour.equals("SILVER") && itemName.contains("LIGHT GRAY")) || (colour.equals("WHITE") && itemName.equals("WOOL")) || (colour.equals("BLACK") && itemName.contains("INK")) || (colour.equals("BROWN") && itemName.contains("COCOA")) || (colour.equals("BLUE") && itemName.contains("LAPIS")) || (colour.equals("WHITE") && itemName.contains("BONE"))) {
-                    if (mazeId <= mc.thePlayer.openContainer.windowId)
-                        mazeId = mc.thePlayer.openContainer.windowId;
-                    lastInteractTime = System.currentTimeMillis();
-                    mc.playerController.windowClick(mazeId, slot.slotNumber, 2, 0, mc.thePlayer);
-                    lastSlot = slot.getSlotIndex();
-                    mazeId++;
-                    break;
-                }
-                if (mazeId - 15 > mc.thePlayer.openContainer.windowId)
-                    break;
-            }
-        }
-        if (displayName.equals("Click in order!") && System.currentTimeMillis() - lastInteractTime >= SleepCommand.waitAmount && ToggleCommand.startsWithToggled) {
-            Container playerContainer = mc.thePlayer.openContainer;
-            IInventory chestInventory = ((ContainerChest) playerContainer).getLowerChestInventory();
-            if (mazeId <= mc.thePlayer.openContainer.windowId)
-                mazeId = mc.thePlayer.openContainer.windowId;
-            int[] order = new int[14];
-            int i;
-            for (i = 10; i <= 25; i++) {
-                if (i != 17 && i != 18) {
-                    ItemStack click = chestInventory.getStackInSlot(i);
-                    if (click == null)
-                        break;
-                    order[(chestInventory.getStackInSlot(i)).stackSize - 1] = i;
-                }
-            }
-            for (i = 0; i < order.length &&
-                    order[i] != 0; i++) {
-                if (i > lastSlot) {
-                    ItemStack check = chestInventory.getStackInSlot(order[i]);
-                    if (order[i] != 0 && check != null && check.getItemDamage() == 14) {
-                        mc.playerController.windowClick(mazeId, order[i], 2, 0, mc.thePlayer);
-                        mazeId++;
-                        lastSlot = i;
-                        lastInteractTime = System.currentTimeMillis();
-                        break;
-                    }
-                    if (mazeId - 15 > mc.thePlayer.openContainer.windowId)
-                        break;
                 }
             }
         }
