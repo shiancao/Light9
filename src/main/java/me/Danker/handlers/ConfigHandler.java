@@ -525,10 +525,6 @@ public class ConfigHandler {
         	if (!hasKey("macro", "delay")) writeIntConfig("macro", "terminal", 150);
         	if (!hasKey("macro", "swap")) writeIntConfig("macro", "swap", 150);
         	if (!hasKey("macro", "simon")) writeIntConfig("macro", "simon", 50);
-		DelayCommand.boneDelay = getInt("macro", "delay");
-        	SwapCommand.swapDelay = getInt("macro", "swap");
-        	SleepCommand.waitAmount = getInt("macro", "terminal");
-        	SimonCommand.simonAmount = getInt("macro", "simon");
 		
 		UltrasequencerSolver.ULTRASEQUENCER_NEXT = initInt("colors", "ultrasequencerNext", 0x40FF40);
 		UltrasequencerSolver.ULTRASEQUENCER_NEXT_TO_NEXT = initInt("colors", "ultrasequencerNextToNext", 0x40DAE6);
